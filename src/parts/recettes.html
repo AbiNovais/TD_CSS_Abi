@@ -1,0 +1,70 @@
+<div x-data="Recettes">
+
+    <div class="mb-5 flex justify-around pt-20">
+        <p>Nous avons <span x-text="filterRecipes.length"></span> recettes</p>
+        <label for="difficulty">Filtrer par difficulté :</label>
+        <select name="Difficulte" id="difficulty" x-model="difficultyFilter" @change="filterDifficulty">
+            <option value="Tout">Toute les difficulte</option>
+            <option value="facile">Facile</option>
+            <option value="moyen">Moyen</option>
+            <option value="difficile">Difficile</option>
+        </select>
+    </div>
+    
+    <div class="grid grid-cols-1 gap-1 md:grid-cols-3 md:gap-4 sm:grid-cols-2 sm:gap-3">
+        <template x-if="filterRecipes.length > 0">
+            <template x-for="recipe in filterRecipes" :key="recipe.id">
+                <div class="col-span-1 border-2" @click="openRecipe(recipe)">
+                    <h2 x-text="recipe.title" class="text-center font-bold"></h2>
+                    <img :src="recipe.imageUrl" alt="img" class="w-full"/>
+                    <p>Niveau de difficulte: <span x-text="recipe.difficulty"></span></p>
+                    <p>Catégorie: <span x-text="recipe.category"></span></p>
+                    <p>Temps de préparation: <span x-text="recipe.preparationTime"></span> minutes</p>
+                </div>
+            </template>
+        </template>
+    </div>
+
+    <template x-if="filterRecipes.length === 0">
+        <p>Aucunes recettes</p>
+    </template>
+    
+    <div 
+        class="fixed inset-0 border-5 flex items-center justify-center z-20"
+        x-show="modalOpen"
+        x-transition
+    >
+        <div 
+            class="bg-white shadow-inner p-6 relative"
+            @click.away="modalOpen = false"
+        >
+
+            <button 
+                class="absolute top-3 right-3 hover:text-red-900" 
+                @click="modalOpen = false"
+            >
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" />
+            </svg>
+            </button>
+
+            <h2 x-text="vueRecipe.title" class="font-bold mb-4"></h2>
+            <img :src="vueRecipe.imageUrl" class="w-full mb-3"/>
+            <p><strong>Niveau :</strong> <span x-text="vueRecipe.difficulty"></span></p>
+            <p><strong>Catégorie :</strong> <span x-text="vueRecipe.category"></span></p>
+            <p><strong>Temps de préparation :</strong> <span x-text="vueRecipe.preparationTime"></span> minutes</p>
+
+            <div class="mt-4">
+                <h2 class="font-medium">INGREDIENTS :</h2>
+                <ul class="list-disc pl-5">
+                    <template x-for="ingredient in vueRecipe.ingredients">
+                        <li x-text="ingredient.name"></li>
+                    </template>
+                </ul>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

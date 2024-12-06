@@ -1,0 +1,24 @@
+<header class="fixed py-5 sm:relative sm:items-center z-10"
+        x-data="{ menuOpen : false }">
+
+    <nav class="flex justify-between">
+        <div>Mes Recettes</div>
+
+        <div class="flex sm:hidden" @click="menuOpen = ! menuOpen">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5" />
+            </svg>       
+        </div>
+
+        <div 
+            class="hover:text-blue-600 sm:flex space-x-7 items-center absolute top-[72px] w-full bg-white sm:relative sm:top-0 sm:w-auto transition-all duration-300"
+            :class="menuOpen ? 'translate-y-0 opacity-100 pointer-events-auto' : '-translate-y-full opacity-0 pointer-events-none'"
+        >
+            <a href="#">Accueil</a>
+            <a href="#">Recettes</a>
+            <a href="#">Contact</a>
+        </div>
+
+    </nav>
+
+</header>
